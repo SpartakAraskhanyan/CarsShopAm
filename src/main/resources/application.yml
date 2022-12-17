@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/cars_shop_am
+    username: root
+    password: root
+
+
+
+  mvc:
+    pathmatch:
+       matching-strategy: ant_path_matcher
+
+
+  liquibase:
+   change-log: classpath:/db/changelog/migration.xml
+
+jwt:
+  secret: "aaa123456"
+  expiration: "5000"
+
+ads:
+  images:
+    path: C:\\Users\\Sus\\IdeaProjects\\CarsShopAm\\adsImages\\
+
+logging:
+  logback:
+    rollingpolicy:
+      file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz # by date
+      max-file-size: 10MB # by size
+  file:
+    name: C:\Users\Sus\IdeaProjects\CarsShopAm\log\application.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} %-5level - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  level:
+    root: info
+    com.example: info
+
+cb:
+  url: https://cb.am/latest.json.php?
+
+

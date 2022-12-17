@@ -1,0 +1,3 @@
+jwt:
+  secret: "aaa123456"
+  expiration: "5000"

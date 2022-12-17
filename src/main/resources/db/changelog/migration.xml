@@ -1,0 +1,83 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="initdb" author="araskhanyan">
+
+        <sql> CREATE TABLE `user`
+              (
+                  `id`           bigint       NOT NULL AUTO_INCREMENT,
+                  `name`         varchar(255) NOT NULL,
+                  `surname`      varchar(255) NOT NULL,
+                  `email`        varchar(255) NOT NULL,
+                  `password`     varchar(255) NOT NULL,
+                  `phone_number` int(11),
+                  `role`         enum('ADMIN','USER') NOT NULL DEFAULT 'USER',
+                  `image`        varchar(255),
+                  `location`     varchar(255),
+                  PRIMARY KEY (`id`)
+              )</sql>
+
+        <sql>CREATE TABLE `ads`
+             (
+                 `id`          bigint NOT NULL AUTO_INCREMENT,
+                 `date_time`   date   NOT NULL,
+                 `car_make`    varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                 `car_model`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+                 `car_year`    date                                                          DEFAULT NULL,
+                 `car_price`   double                                                        DEFAULT NULL,
+                 `description` text,
+                 `user_id`     bigint NOT NULL,
+                 PRIMARY KEY (`id`, `user_id`),
+                 KEY           `user_id` (`user_id`),
+                 CONSTRAINT `ads_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+             )</sql>
+
+        <sql>CREATE TABLE `favourites`
+             (
+                 `ads_id`  bigint NOT NULL,
+                 `user_id` bigint NOT NULL,
+                 PRIMARY KEY (`ads_id`, `user_id`),
+                 KEY       `user_id` (`user_id`),
+                 CONSTRAINT `favourites_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+                 CONSTRAINT `favourites_ibfk_2` FOREIGN KEY (`ads_id`) REFERENCES `ads` (`id`)
+             )</sql>
+
+
+        <sql> CREATE TABLE `images`
+              (
+                  `id`         bigint       NOT NULL AUTO_INCREMENT,
+                  `image_path` varchar(255) NOT NULL,
+                  `ads_id`     bigint       NOT NULL,
+                  PRIMARY KEY (`id`, `ads_id`),
+                  KEY          `ads_id` (`ads_id`),
+                  CONSTRAINT `images_ibfk_1` FOREIGN KEY (`ads_id`) REFERENCES `ads` (`id`)
+              )
+        </sql>
+
+        <sql> CREATE TABLE `currency`
+              (    `id`         bigint       NOT NULL AUTO_INCREMENT,
+                  `usd` varchar(255) NOT NULL,
+                  `rub` varchar(255) NOT NULL,
+                   PRIMARY KEY (`id`)
+
+              )
+
+        </sql>
+
+        <addColumn tableName="ads">
+            <column name="is_active" type="BOOLEAN" defaultValue="true">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+
+    </changeSet>
+
+</databaseChangeLog>
