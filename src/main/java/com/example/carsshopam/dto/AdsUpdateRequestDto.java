@@ -1,14 +1,10 @@
 package com.example.carsshopam.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -18,10 +14,8 @@ public class AdsUpdateRequestDto {
 
     private String carMake;
     private String carModel;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate carYear;
-    private double carPrice;
+    private String carYear;
+    private double carPriceAmd;
     private String description;
 
 }

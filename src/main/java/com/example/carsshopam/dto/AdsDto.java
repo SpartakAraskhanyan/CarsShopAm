@@ -18,8 +18,10 @@ public class AdsDto {
     private Date dateTime;
     private String carMake;
     private String carModel;
-    private Date carYear;
-    private double carPrice;
+    private String carYear;
+    private double carPriceUsd;
+    private double carPriceAmd;
+    private double carPriceRub;
     private String description;
 
 }

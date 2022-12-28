@@ -7,11 +7,11 @@ import com.example.carsshopam.model.Ads;
 import com.example.carsshopam.model.User;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-
 public interface AdsService {
 
     List<AdsResponseDto> findAll();
@@ -34,4 +34,8 @@ public interface AdsService {
     void addFavourites(User user, int id);
 
     List<AdsResponseDto> getFavouritesByUserId(int id);
+
+    void deleteFavourites(int id, User user);
+
+    void buildResponseOfAds(ArrayList<AdsResponseDto> adsResponseDtoList, Ads ads);
 }

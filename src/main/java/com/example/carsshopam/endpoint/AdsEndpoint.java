@@ -5,7 +5,6 @@ import com.example.carsshopam.dto.AdsRequestDto;
 import com.example.carsshopam.dto.AdsResponseDto;
 import com.example.carsshopam.dto.AdsUpdateRequestDto;
 import com.example.carsshopam.exception.AdsNotFoundException;
-import com.example.carsshopam.mapper.AdsMapper;
 import com.example.carsshopam.model.Ads;
 import com.example.carsshopam.model.User;
 import com.example.carsshopam.repository.CustomAdsRepository;
@@ -30,11 +29,7 @@ import java.util.Optional;
 public class AdsEndpoint {
 
     private final AdsService adsService;
-
-    private final AdsMapper adsMapper;
-
     private final CustomAdsRepository customAdsRepository;
-
 
     Logger log = LoggerFactory.getLogger(AdsEndpoint.class.getName());
 
@@ -50,12 +45,13 @@ public class AdsEndpoint {
     public List<AdsResponseDto> getAllFilteredAds(@AuthenticationPrincipal CurrentUser currentUser, @RequestBody AdsFilterDto adsFilterDto) {
         log.info("endpoint/ads called by " + currentUser.getUser().getEmail());
 
-        List<AdsResponseDto> result = new ArrayList<>();
+        ArrayList<AdsResponseDto> result = new ArrayList<>();
         for (Ads ads : customAdsRepository.ads(adsFilterDto)) {
-            result.add(adsMapper.map(ads));
+            adsService.buildResponseOfAds(result, ads);
         }
         return result;
     }
+
 
     @GetMapping
     public ResponseEntity<List<AdsResponseDto>> getAllAds() {
@@ -115,7 +111,15 @@ public class AdsEndpoint {
 
     @GetMapping("/my/favourites")
     public ResponseEntity<List<AdsResponseDto>> getFavouritesByUser(@AuthenticationPrincipal CurrentUser currentUser) {
+//        currentUser.getUser()
         return new ResponseEntity<>(adsService.getFavouritesByUserId(currentUser.getUser().getId()), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/my/favourites/{id}")
+    public ResponseEntity<?> deleteFavourites(@PathVariable("id") int adsId, @AuthenticationPrincipal CurrentUser currentUser){
+       adsService.deleteFavourites(adsId, currentUser.getUser());
+        return ResponseEntity.ok().build();
+
     }
 
 }

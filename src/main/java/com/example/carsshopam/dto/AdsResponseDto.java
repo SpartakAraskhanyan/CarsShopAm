@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 
 @Data
@@ -21,10 +21,11 @@ public class AdsResponseDto {
     private String carModel;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dateTime;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate carYear;
-    private double carPrice;
+    private String carYear;
+    private double carPriceUsd;
+    private double carPriceAmd;
+    private double carPriceRub;
     private String description;
-    private boolean isActive;
-    private User user;
+    private boolean active;
+    private UserDto userDto;
 }

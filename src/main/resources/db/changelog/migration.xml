@@ -62,21 +62,34 @@
         </sql>
 
         <sql> CREATE TABLE `currency`
-              (    `id`         bigint       NOT NULL AUTO_INCREMENT,
+              (
+                  `id`  bigint       NOT NULL AUTO_INCREMENT,
                   `usd` varchar(255) NOT NULL,
                   `rub` varchar(255) NOT NULL,
-                   PRIMARY KEY (`id`)
+                  PRIMARY KEY (`id`)
 
               )
 
         </sql>
 
         <addColumn tableName="ads">
-            <column name="is_active" type="BOOLEAN" defaultValue="true">
+            <column name="active" type="BOOLEAN" defaultValue="true">
                 <constraints nullable="false"/>
             </column>
         </addColumn>
 
+
+    </changeSet>
+    <changeSet id="changeYearType" author="Spartak">
+        <modifyDataType tableName="ads" columnName="car_year" newDataType="varchar (4)"/>
+    </changeSet>
+
+    <changeSet id="changeDateType" author="Spartak">
+        <modifyDataType tableName="ads" columnName="date_time" newDataType="datetime"/>
+    </changeSet>
+
+    <changeSet id="editPriceType" author="Spartak">
+        <renameColumn tableName="ads" oldColumnName="car_price" newColumnName="car_price_amd" columnDataType="double" />
 
     </changeSet>
 

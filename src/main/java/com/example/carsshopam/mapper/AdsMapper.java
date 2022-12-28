@@ -8,15 +8,17 @@ import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface AdsMapper {
-   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Ads map(AdsRequestDto adsRequestDto);
 
+    @Mapping(target = "userDto", source = "user")
+    @Mapping(target = "carPriceAmd",source = "carPriceAmd")
+    @Mapping(target = "carPriceRub" ,ignore = true)
+    @Mapping(target = "carPriceUsd",ignore = true)
     AdsResponseDto map(Ads ads);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
     Ads map(AdsUpdateRequestDto updateRequestDto);
-
-
 
 
 }

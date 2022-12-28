@@ -25,7 +25,8 @@ public class DataOfCurrency {
     private String cbUrl;
 
     @Transactional
-    @Scheduled(cron = "* * 11 * * ?")
+//    @Scheduled(cron = "0/10 * * * * *")
+    @Scheduled(cron = "0 0 14 * * ?")
     public void getCurrency() {
         ResponseEntity<Map> currencies = restTemplate.getForEntity(cbUrl, Map.class);
         Map<String, String> hashMap = currencies.getBody();
@@ -42,6 +43,7 @@ public class DataOfCurrency {
                         if (stringStringEntry.getKey().equals("USD")) {
                             currency.setUsd(stringStringEntry.getValue());
                         }
+
                     });
             currencyRepository.save(currency);
         }
